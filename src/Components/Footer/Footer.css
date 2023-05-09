@@ -1,0 +1,22 @@
+footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer__love {
+    font-weight: 500;
+    font-size: 14px;
+    color: #081E34;
+}
+
+.footer__credits {
+    color: #081E34;
+    opacity: 0.5;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.footer__credits__icons {
+    color: #081E34;
+    text-decoration: underline;
+}
