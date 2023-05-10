@@ -82,46 +82,88 @@ export default function Filter() {
 		if(taskName.trim().length > 0 && taskName) setTodos([newTask, ...todos]);
 	}
 
-	const handleDone = (id: string) => {
+	// const handleDone = (id: string) => {
+	// 	const newToDoList = todos.map((item) => {
+	// 		if (id === item.id) {
+	// 			return {
+	// 				...item,
+	// 				isDone: !item.isDone,
+	// 				isDeleted: false
+	// 			};
+	// 		}
+	// 		return item;
+	// 	});
+	// 	setTodos(newToDoList);
+	// };
+
+	// const handleDelete = (id: string) => {
+	// 	const newToDoList = todos.map((item) => {
+	// 		if (id === item.id) {
+	// 			return {
+	// 				...item,
+	// 				isDeleted: true,
+	// 				isDone: false
+	// 			};
+	// 		}
+	// 		return item;
+	// 	});
+	// 	setTodos(newToDoList);
+	// };
+
+	const handleFunction = (id:string, action: string) => {
 		const newToDoList = todos.map((item) => {
 			if (id === item.id) {
-				return {
-					...item,
-					isDone: !item.isDone,
-					isDeleted: false
-				};
+				if(action === 'delete') {
+					return {
+						...item,
+						isDeleted: true,
+						isDone: false
+					};
+				}
+				if(action === 'done') {
+					return {
+						...item,
+						isDone: !item.isDone,
+						isDeleted: false
+					};
+				}
+				if(action ==='return') {
+					return {
+						...item,
+						isDeleted: false
+					};
+				}
 			}
 			return item;
 		});
 		setTodos(newToDoList);
+	}
+
+	const handleDone = (id: string) => {
+		handleFunction(id, 'done');
 	};
 
 	const handleDelete = (id: string) => {
-		const newToDoList = todos.map((item) => {
-			if (id === item.id) {
-				return {
-					...item,
-					isDeleted: true,
-					isDone: false
-				};
-			}
-			return item;
-		});
-		setTodos(newToDoList);
+		handleFunction(id, 'delete');
 	};
 
 	const handleReturn = (id: string) => {
-		const newToDoList = todos.map((item) => {
-			if (id === item.id) {
-				return {
-					...item,
-					isDeleted: false
-				};
-			}
-			return item;
-		});
-		setTodos(newToDoList);
+		handleFunction(id, 'return');
 	};
+	  
+
+	// const handleReturn = (id: string) => {
+	// 	const newToDoList = todos.map((item) => {
+	// 		if (id === item.id) {
+	// 			return {
+	// 				...item,
+	// 				isDeleted: false
+	// 			};
+	// 		}
+	// 		return item;
+	// 	});
+	// 	setTodos(newToDoList);
+	// };
 
 	const handleDeleteForever = (id: string) => {
 		const newToDoList = todos.filter((item) => item.id !== id);
