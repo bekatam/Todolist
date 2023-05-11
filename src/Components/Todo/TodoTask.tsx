@@ -30,10 +30,27 @@ export default function TodoTask(props: TodoProps) {
 		<div className={isDone ? "todo__wrapper todo__wrapper_done" : isDeleted ? "todo__wrapper todo__wrapper_deleted" : "todo__wrapper"}>
 			<button className="todo__more" onClick={()=>{isDeleted ? handleDeletedModal() : handleMore()}}>
 				<MoreVertIcon sx={{fontSize:16}}/>
-				{(!isDeleted && doneModal || isDeleted && deletedModal) && <TodoDoneModal handleReturn = {handleReturn} handleDelete={handleDelete} isDeleted={isDeleted} id={id} handleDeleteForever={handleDeleteForever}/>}
+				{(!isDeleted && doneModal || isDeleted && deletedModal) && 
+					<TodoDoneModal 
+						handleReturn = {handleReturn} 
+						handleDelete={handleDelete} 
+						isDeleted={isDeleted} 
+						id={id} 
+						handleDeleteForever={handleDeleteForever}/
+					>}
 			</button>
-			<button onClick = {()=>handleDone(id)} className={isDone ? "todo__check todo__check_done" : isDeleted ? "todo__check todo__check_deleted" : "todo__check"}>{isDone ? <CheckIcon sx={{fontSize: '16px', color: "#fff"}}/> : isDeleted ? <CloseIcon sx={{fontSize: '18px', color: "#fff", transform: 'translate(-2px,-2px)'}}/> : <></>}</button>
-			<div className={isDone ? "todo__task todo__task_done" : isDeleted ? "todo__task todo__task_deleted" : "todo__task"}>{name}</div>
+			<button onClick = {()=>{handleDone(id)}} 
+					className={isDone && !isDeleted ? "todo__check todo__check_done" : isDeleted ? "todo__check todo__check_deleted" : "todo__check"}>
+					{isDone ? <CheckIcon 
+									sx={{fontSize: '16px', color: "#fff"}}
+								/> 
+					: isDeleted ? <CloseIcon 
+										sx={{fontSize: '18px', color: "#fff", transform: 'translate(-2px,-2px)'}}
+									/> 
+					: <></>}
+			</button>
+			<div className={isDone ? "todo__task todo__task_done" 
+							: isDeleted ? "todo__task todo__task_deleted" : "todo__task"}>{name}</div>
 		</div>
 		)
 };

@@ -6,6 +6,47 @@ import Todo from "../Todo";
 import { v4 as uuid } from 'uuid';
 import { Link } from 'react-router-dom';
 
+// const handleReturn = (id: string) => {
+// 	const newToDoList = todos.map((item) => {
+// 		if (id === item.id) {
+// 			return {
+// 				...item,
+// 				isDeleted: false
+// 			};
+// 		}
+// 		return item;
+// 	});
+// 	setTodos(newToDoList);
+// };
+
+// const handleDone = (id: string) => {
+// 	const newToDoList = todos.map((item) => {
+// 		if (id === item.id) {
+// 			return {
+// 				...item,
+// 				isDone: !item.isDone,
+// 				isDeleted: false
+// 			};
+// 		}
+// 		return item;
+// 	});
+// 	setTodos(newToDoList);
+// };
+
+// const handleDelete = (id: string) => {
+// 	const newToDoList = todos.map((item) => {
+// 		if (id === item.id) {
+// 			return {
+// 				...item,
+// 				isDeleted: true,
+// 				isDone: false
+// 			};
+// 		}
+// 		return item;
+// 	});
+// 	setTodos(newToDoList);
+// };
+
 export default function Filter() {
 
 	const [filters, setFilters] = useState([
@@ -52,6 +93,19 @@ export default function Filter() {
 
 	const[taskName, setTaskName] = useState('');
 
+	const [addIsClicked, setAddIsClicked] = useState(false);
+	const openModal = () => {
+		setAddIsClicked(!addIsClicked);
+	}
+
+	const sumbitOnEnter = (e:any) => {
+		if(e.key === 'Enter') {
+            e.preventDefault(); 
+            createTask();
+            setTaskName('');
+        };
+	}
+
 	const handleClick = (itemName: string) => {
 		const newFilters = filters.map((item)=>{
 			if(item.name === itemName) {
@@ -68,6 +122,7 @@ export default function Filter() {
 		if (item.isActive) return item.name;
 	})
 
+
 	const textOfTask = (e?: any) => {
 		setTaskName(e.target.value);
 	}
@@ -80,35 +135,8 @@ export default function Filter() {
 			id: uuid()
 		}
 		if(taskName.trim().length > 0 && taskName) setTodos([newTask, ...todos]);
+		setTaskName('');
 	}
-
-	// const handleDone = (id: string) => {
-	// 	const newToDoList = todos.map((item) => {
-	// 		if (id === item.id) {
-	// 			return {
-	// 				...item,
-	// 				isDone: !item.isDone,
-	// 				isDeleted: false
-	// 			};
-	// 		}
-	// 		return item;
-	// 	});
-	// 	setTodos(newToDoList);
-	// };
-
-	// const handleDelete = (id: string) => {
-	// 	const newToDoList = todos.map((item) => {
-	// 		if (id === item.id) {
-	// 			return {
-	// 				...item,
-	// 				isDeleted: true,
-	// 				isDone: false
-	// 			};
-	// 		}
-	// 		return item;
-	// 	});
-	// 	setTodos(newToDoList);
-	// };
 
 	const handleFunction = (id:string, action: string) => {
 		const newToDoList = todos.map((item) => {
@@ -120,11 +148,10 @@ export default function Filter() {
 						isDone: false
 					};
 				}
-				if(action === 'done') {
+				if(action === 'done' && !item.isDeleted) {
 					return {
 						...item,
-						isDone: !item.isDone,
-						isDeleted: false
+						isDone: !item.isDone
 					};
 				}
 				if(action ==='return') {
@@ -152,19 +179,6 @@ export default function Filter() {
 	};
 	  
 
-	// const handleReturn = (id: string) => {
-	// 	const newToDoList = todos.map((item) => {
-	// 		if (id === item.id) {
-	// 			return {
-	// 				...item,
-	// 				isDeleted: false
-	// 			};
-	// 		}
-	// 		return item;
-	// 	});
-	// 	setTodos(newToDoList);
-	// };
-
 	const handleDeleteForever = (id: string) => {
 		const newToDoList = todos.filter((item) => item.id !== id);
 		setTodos(newToDoList);
@@ -177,16 +191,37 @@ export default function Filter() {
 				<div className="filtered__wrapper">
 					{filters.map((item, index) => {
 						return <Link to={`./${item.name}`}>
-							<Filtered key = {index} name={item.name} bool={item.isActive} handleClick = {handleClick}/>
-						</Link>
+									<Filtered 
+										key = {index} 
+										name={item.name} 
+										bool={item.isActive} 
+										handleClick = {handleClick}
+									/>
+								</Link>
 					})}
 				</div>
-				<AddTask textOfTask = {textOfTask} createTask={createTask}/>
+				<AddTask 
+					textOfTask = {textOfTask} 
+					createTask={createTask} 
+					taskName  = {taskName} 
+					setTaskName={setTaskName} 
+					sumbitOnEnter={sumbitOnEnter}
+					openModal = {openModal}
+					addIsClicked={addIsClicked}
+				/>
 			</div>
 			<div className="filter__title">{title}</div>
 			{filters.map((item, index)=>{
 				if (item.isActive) {
-					return <Todo key = {index} nameOfFilter = {item.name} todos={todos} setTodos={setTodos} handleDone={handleDone} handleDelete={handleDelete} handleReturn={handleReturn} handleDeleteForever={handleDeleteForever}/>
+					return <Todo 
+						key = {index} 
+						nameOfFilter = {item.name} 
+						todos={todos} 
+						setTodos={setTodos} 
+						handleDone={handleDone} 
+						handleDelete={handleDelete} 
+						handleReturn={handleReturn} 
+						handleDeleteForever={handleDeleteForever}/>
 				}
 			})}
 		</>
