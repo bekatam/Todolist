@@ -1,5 +1,6 @@
-import TodoTask from './TodoTask';
+import { TodoTask } from './TodoTask';
 import './Todo.css'
+import { memo } from 'react';
 type TodoProps = {
 	nameOfFilter: string,
 	todos: any[],
@@ -9,7 +10,7 @@ type TodoProps = {
 	handleReturn: any,
 	handleDeleteForever: any
 }
-export default function Todo(props: TodoProps) {
+export const Todo:React.FC<TodoProps> = memo((props) => {
 	const {todos, setTodos, nameOfFilter, handleDone, handleDelete, handleReturn, handleDeleteForever} = props;
 	return (
 		<div className='todo'>
@@ -40,5 +41,4 @@ export default function Todo(props: TodoProps) {
 
 		</div> 	 
 	)
-
-}
+})

@@ -1,53 +1,12 @@
-import { useState } from "react";
-import Filtered from "./Filtered";
+import { useState, memo } from "react";
+import {Filtered} from "./Filtered";
 import './Filter.css';
-import AddTask from "../AddTask";
-import Todo from "../Todo";
+import {AddTask} from "../AddTask";
+import {Todo} from "../Todo";
 import { v4 as uuid } from 'uuid';
 import { Link } from 'react-router-dom';
 
-// const handleReturn = (id: string) => {
-// 	const newToDoList = todos.map((item) => {
-// 		if (id === item.id) {
-// 			return {
-// 				...item,
-// 				isDeleted: false
-// 			};
-// 		}
-// 		return item;
-// 	});
-// 	setTodos(newToDoList);
-// };
-
-// const handleDone = (id: string) => {
-// 	const newToDoList = todos.map((item) => {
-// 		if (id === item.id) {
-// 			return {
-// 				...item,
-// 				isDone: !item.isDone,
-// 				isDeleted: false
-// 			};
-// 		}
-// 		return item;
-// 	});
-// 	setTodos(newToDoList);
-// };
-
-// const handleDelete = (id: string) => {
-// 	const newToDoList = todos.map((item) => {
-// 		if (id === item.id) {
-// 			return {
-// 				...item,
-// 				isDeleted: true,
-// 				isDone: false
-// 			};
-// 		}
-// 		return item;
-// 	});
-// 	setTodos(newToDoList);
-// };
-
-export default function Filter() {
+export const Filter:React.FC = memo(() => {
 
 	const [filters, setFilters] = useState([
 		{
@@ -223,8 +182,9 @@ export default function Filter() {
 						handleReturn={handleReturn} 
 						handleDeleteForever={handleDeleteForever}/>
 				}
+				return <></>
 			})}
 		</>
 
 	)
-};
+});

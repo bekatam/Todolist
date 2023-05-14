@@ -1,9 +1,11 @@
+import { memo } from "react";
+
 type FilterProps = {
   name: string,
   bool: boolean
   handleClick: any
 }
-export default function Filtered(props: FilterProps) {
+export const Filtered: React.FC<FilterProps> = memo((props) => {
   const {name, bool, handleClick} = props;
   
   return (
@@ -13,4 +15,4 @@ export default function Filtered(props: FilterProps) {
       </button> 
     </>
   );
-}
+})

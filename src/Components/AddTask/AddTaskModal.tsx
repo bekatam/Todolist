@@ -1,3 +1,4 @@
+import {memo} from 'react'
 type textOfTaskModalprops = {
     textOfTask: any,
     createTask: any,
@@ -6,7 +7,7 @@ type textOfTaskModalprops = {
     sumbitOnEnter: any
 }
 
-export default function AddTaskModal(props: textOfTaskModalprops) {
+export const AddTaskModal:React.FC<textOfTaskModalprops> = memo((props) => {
     const {textOfTask, createTask, taskName, sumbitOnEnter} = props;
     return (
         <div className="AddTaskModal">
@@ -15,4 +16,4 @@ export default function AddTaskModal(props: textOfTaskModalprops) {
             <button className="AddTaskModal__button" onClick={createTask}>Add</button>
         </div>
     )
-}
+})

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import './AddTask.css';
-import AddTaskModal from './AddTaskModal';
+import {AddTaskModal} from './AddTaskModal';
 type ModalProps = {
 	textOfTask: any,
 	createTask: any,
@@ -10,7 +10,7 @@ type ModalProps = {
 	openModal: any,
 	addIsClicked: boolean
 }
-export default function AddTask(props: ModalProps) {
+export const AddTask:React.FC<ModalProps> = memo((props) => {
 	const {textOfTask, createTask, taskName, setTaskName, sumbitOnEnter, openModal, addIsClicked} = props;
 
   	return (
@@ -28,4 +28,4 @@ export default function AddTask(props: ModalProps) {
 							/>}
 		</>
 	)
-}
+})

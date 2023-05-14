@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import './Header.css';
 import LoopIcon from '@mui/icons-material/Loop';
 
-export default function Header() {
+export const Header:React.FC = memo(() => {
   const [quote, setQuote] = useState('');
 
   useEffect(() => {
@@ -10,12 +10,10 @@ export default function Header() {
       const response = await fetch('https://type.fit/api/quotes');
       const data = await response.json();
       const randomNumber = Math.floor(Math.random() * data.length);
-      setQuote(data[randomNumber].text)
+      setQuote(data[randomNumber].text + ' - ' + data[randomNumber].author)
     };
-
-    const timeout = setTimeout(getQuote, 3000);
-    return () => clearTimeout(timeout); 
-  }, []);
+    getQuote()
+  },[]);
 
   return (
     <>
@@ -23,4 +21,4 @@ export default function Header() {
       <div className="header__subtitle">{quote ? quote : <><LoopIcon/>Loading quote...</>}</div>
     </>
   );
-}
+})
